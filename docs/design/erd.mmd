@@ -1,0 +1,51 @@
+erDiagram
+    USER ||--o{ PROJECT_MEMBER : "tagja"
+    PROJECT ||--o{ PROJECT_MEMBER : "tartalmaz"
+    PROJECT ||--o{ TASK : "tartozik hozzá"
+    USER ||--o{ TASK : "létrehozza (created_by)"
+    USER |o--o{ TASK : "felelőse (assignee_id)"
+    TASK ||--o{ COMMENT : "tartalmaz"
+    USER ||--o{ COMMENT : "írja"
+
+    USER {
+        uuid id PK
+        string email UK "NOT NULL, UNIQUE"
+        string display_name "NOT NULL"
+        string password_hash "NOT NULL"
+        timestamp created_at "NOT NULL"
+    }
+
+    PROJECT {
+        uuid id PK
+        string name "NOT NULL"
+        text description
+        boolean is_private "DEFAULT true"
+        timestamp created_at "NOT NULL"
+    }
+
+    PROJECT_MEMBER {
+        uuid project_id PK, FK
+        uuid user_id PK, FK
+        string role "OWNER | MEMBER"
+        timestamp joined_at "NOT NULL"
+    }
+
+    TASK {
+        uuid id PK
+        uuid project_id FK "NOT NULL"
+        uuid created_by FK "NOT NULL"
+        uuid assignee_id FK "NULLABLE"
+        string title "NOT NULL, max 120"
+        text description
+        string status "BACKLOG | IN_PROGRESS | REVIEW | DONE"
+        timestamp created_at "NOT NULL"
+        timestamp updated_at "NOT NULL"
+    }
+
+    COMMENT {
+        uuid id PK
+        uuid task_id FK "NOT NULL"
+        uuid author_id FK "NOT NULL"
+        text body "NOT NULL"
+        timestamp created_at "NOT NULL"
+    }
