@@ -1,0 +1,23 @@
+# Local secrets & environment variables
+.env
+.env.*
+!.env.example
+
+# IDE & Editor folders
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*~
+
+# PHP & Composer dependencies (ha később használtok)
+vendor/
+composer.phar
+
+# Docker & Logs
+*.log
+docker-compose.override.yml
