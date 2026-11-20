@@ -1,0 +1,25 @@
+sequenceDiagram
+    actor Member as Projekt tag
+    participant UI as Web UI
+    participant API as Application / API
+    participant Auth as Identity & Access
+    participant Tasks as Tasks modul
+    participant DB as Relational Database
+
+    Member->>UI: Új feladat mentése (cím, leírás)
+    UI->>API: POST /projects/{id}/tasks
+    API->>Auth: Tagja a felhasználó a projektnek?
+
+    alt Jogosult (tagja a projektnek)
+        Auth-->>API: Igen
+        API->>Tasks: Validálás + feladat létrehozása
+        Tasks->>DB: INSERT task
+        DB-->>Tasks: task_id
+        Tasks-->>API: Létrehozott feladat
+        API-->>UI: 201 Created + task JSON
+        UI-->>Member: Új feladat megjelenítése
+    else Jogosulatlan (nem tag)
+        Auth-->>API: Nem
+        API-->>UI: 403 Forbidden
+        UI-->>Member: Hozzáférés megtagadva hibaüzenet
+    end

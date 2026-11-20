@@ -1,0 +1,16 @@
+flowchart TB
+    Member["<b>Projekt tag</b><br/><i>[Person]</i><br/>Feladatokat hoz létre, frissít,<br/>kommentel és követ."]
+    Admin["<b>Projektadminisztrátor</b><br/><i>[Person]</i><br/>Projekteket, tagságot és<br/>jogosultságokat kezel."]
+
+    TaskFlow["<b>TaskFlow</b><br/><i>[Software System]</i><br/>Kis csapatok projekt- és<br/>feladatkezelő rendszere."]
+
+    Email["<b>E-mail szolgáltatás</b><br/><i>[External System]</i><br/>Értesítési e-maileket kézbesít;<br/>nem a projekt tulajdona."]
+
+    Member -->|Feladatokat kezel és követ<br/>HTTPS| TaskFlow
+    Admin -->|Tagságot és projektet kezel<br/>HTTPS| TaskFlow
+    TaskFlow -->|Értesítési e-mailt küld<br/>SMTP/HTTPS| Email
+
+    style TaskFlow fill:#1168bd,stroke:#0b4884,color:#ffffff
+    style Email fill:#999999,stroke:#6b6b6b,color:#ffffff
+    style Member fill:#08427b,stroke:#052e56,color:#ffffff
+    style Admin fill:#08427b,stroke:#052e56,color:#ffffff
